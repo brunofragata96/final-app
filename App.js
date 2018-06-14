@@ -4,9 +4,10 @@ import {
   Text, 
   View, 
   FlatList,
+  Component,
 } from 'react-native';
 
-//import TodoAddForm from './todo/addForm'
+import AddForm from './todo/addForm'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,8 +32,29 @@ export default class App extends React.Component {
             }
         ]
     }
+    this.handleUpdateListItem = this.handleUpdateListItem.bind(this)
+    this.handleRemoveListItem = this.handleRemoveListItem.bind(this)
+    this.handleAddListItem = this.handleAddListItem.bind(this)
+  }
 
-}
+  handleUpdateListItem (index, data) {
+    let list = this.state.list.slice()
+    list[index] = data
+    this.updateList(list)
+  }
+
+  handleRemoveListItem (index) {
+    let list = this.state.list.slice()
+    list.splice(index, 1)
+    this.updateList(list)
+  }
+
+  handleAddListItem (data) {
+    //console.log (data)
+    let list = this.state.list.slice()
+    list.push(data)
+    this.updateList(list)
+  }
 
   render() {
     return (
@@ -46,6 +68,7 @@ export default class App extends React.Component {
           renderItem={({item}) => <Text style={styles.item}>{item.text}</Text>}
         />
         </View>
+        <AddForm/>
       </View>
     );
   }
