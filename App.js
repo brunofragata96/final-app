@@ -65,7 +65,8 @@ export default class App extends React.Component {
             this.state.list
           }
           keyExtractor = {(item, index) => "k" + index}
-          renderItem={({item}) => <Text style={styles.item}>{item.text}</Text>}
+          renderItem={({item}) => <Text style={styles.item}>{item.text} {item.date.toString()}</Text>}
+          //renderItem={({item}) => <Text style={styles.item}>{item.date.toString()}</Text>}
         />
         </View>
         <AddForm/>

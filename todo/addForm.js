@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { 
     View,
     TextInput,
     Button,
     Text,
     Switch,
-} from 'react-native'
+} from 'react-native';
+
+import MyDatePicker from '../date/datePicker';
 
 class AddForm extends React.Component{
     constructor(props) {
@@ -24,24 +26,23 @@ class AddForm extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    onControlChange(value) {
+    onControlChange(value) { 
+        let data = Object.assign({} , this.state.data)
+        data.done = value
         return this.setState({
-            isOpen: !this.state.isOpen
+            data 
         });
      }  
 
-    handleInputChange (e) {
-        let val = e.target.value
-        let name = e.target.name
+    handleInputChange (name, val) {
         let data = Object.assign({}, this.state.data)
-        data[name] = e.target.type === 'checkbox' ? e.target.checked : val
+        data[name] = val
         this.setState({
             data
         })
     }
 
-    handleSubmit (e) {
-        e.preventDefault()
+    handleSubmit () {
         // validate data and then send
         let data = Object.assign({}, this.state.data)
         data.date = new Date (data.date)
@@ -54,6 +55,22 @@ class AddForm extends React.Component{
             //adding: false
         })
         !this.props.onSubmit || this.props.onSubmit(data)
+
+
+        /* 
+        let fnOnChange = this.handleInputChange.bind(this, "text")
+        fnOnChange("texto do use");
+
+
+        function bindFunction (scope, fn, nome) {
+            return function (val) {
+                fn.apply(scope, nome, val)
+            }
+        }
+        let fnOnChange = bindFunction(this, this.handleInputChange, "nome")
+        fnOnChange("12323445345"); 
+        */
+
     }
 
     render () {
@@ -67,7 +84,7 @@ class AddForm extends React.Component{
                                 id="text"
                                 value={this.state.data.text} 
                                 name="text"
-                                onChange={this.handleInputChange}
+                                onChange={this.handleInputChange.bind(this,"text")}
                             />
                         </View>
                     </View>
@@ -87,15 +104,12 @@ class AddForm extends React.Component{
                         <View className="input__wrapper">
                             <Switch  
                                 onValueChange={this.onControlChange} 
-                                value={this.state.isOpen}
-                                /*id="done"
-                                value={this.state.data.done}
-                                name="done"*/                
+                                value={this.state.data.done}            
                             />
                         </View>
                     </View>
                     <Button 
-                        onClick={this.handleSubmit}
+                        onPress={this.handleSubmit}
                         title="Submit"
                     />
                 </View>
