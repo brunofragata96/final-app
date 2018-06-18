@@ -8,14 +8,15 @@ import {
 } from 'react-native';
 
 import MyDatePicker from '../date/datePicker';
-import dateMoment, { formatDate } from '../date/dateMoment';
+import { formatDate } from '../date/dateMoment';
+import styles from '../styles/styles';
 
 class AddForm extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            adding: false,
-            isOpen : false,
+            //adding: false,
+            //isOpen : false,
             data: {
                 text: "",
                 date: "",
@@ -36,7 +37,6 @@ class AddForm extends React.Component{
      }  
 
     handleInputChange (name, val) {
-        //console.log(data)
         let data = Object.assign({}, this.state.data)
         data[name] = val
         this.setState({
@@ -47,8 +47,7 @@ class AddForm extends React.Component{
     handleSubmit () {
         // validate data and then send
         let data = Object.assign({}, this.state.data)
-        data.date = new Date (data.date)
-        formatDate(data.date)
+        data.date = data.date !== "" ? new Date (data.date) : ""
         this.setState({
             data: {
                 text: "",
@@ -57,7 +56,6 @@ class AddForm extends React.Component{
             },
             //adding: false
         })
-        console.log(data)
         !this.props.onSubmit || this.props.onSubmit(data)
 
 
@@ -81,31 +79,24 @@ class AddForm extends React.Component{
         return <View>
                 
                 <View action={"#"} onSubmit={this.handleSubmit}>
-                    <View className="input__container">
-                        {/*<label className="input__label" htmlFor="text">Task: </label>*/}
-                        <View className="input__wrapper">
-                            <TextInput type="text" 
-                                id="text"
+                    <View style={styles.input__container}>
+                        <View style={styles.input__wrapper}>
+                            <TextInput  
                                 value={this.state.data.text} 
-                                name="text"
-                                onChange={this.handleInputChange.bind(this,"text")}
+                                onChangeText={this.handleInputChange.bind(this,"text")}
                             />
                         </View>
                     </View>
-                    <View className="input__container">
-                        {/*<label className="input__label" htmlFor="date">Date: </label>*/}
-                        <View className="input__wrapper">
-                            <MyDatePicker type="date" 
-                                id="date"
+                    <View style={styles.input__container}>
+                        <View style={styles.input__wrapper}>
+                            <MyDatePicker
                                 value={this.state.data.date}
-                                name="date"
-                               // onChange={this.handleInputChange}
+                                onChange={this.handleInputChange.bind(this, "date")}
                             />
                         </View>
                     </View>
-                    <View className="input__container">
-                        {/*<label className="input__label" htmlFor="done">Estado: </labe*/}
-                        <View className="input__wrapper">
+                    <View style={styles.input__container}>
+                        <View style={styles.input__wrapper}>
                             <Switch  
                                 onValueChange={this.onControlChange} 
                                 value={this.state.data.done}            

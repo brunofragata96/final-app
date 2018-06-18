@@ -13,12 +13,10 @@ export default class MyDatePicker extends Component {
     return (
       <DatePicker
         style={{width: 200}}
-        date={this.state.date}
+        date={this.props.value}
         mode="date"
         placeholder="select date"
         format="YYYY-MM-DD"
-        minDate="2016-05-01"
-        maxDate="2016-06-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -33,7 +31,7 @@ export default class MyDatePicker extends Component {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => {this.setState({date: date})}}
+        onDateChange={!this.props.onChange || this.props.onChange}
       />
     )
   }

@@ -5,3 +5,9 @@ Final App notes:
 - como formatar a data SOLVED
 - como renderizar o done e por fazer {usar o moment.js}
 - adicionar elementos UNSOLVED
+- como passar o value pelo submit
+- como adicionar os botoes
+
+features extra:
+- adicionar cor a cada todo
+- add e edit

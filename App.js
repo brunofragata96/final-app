@@ -4,19 +4,17 @@ import {
   Text, 
   View, 
   FlatList,
-  Component,
+  Button,
 } from 'react-native';
 
-import AddForm from './todo/addForm'
-import dateMoment from './date/dateMoment';
+import AddForm from './todo/AddForm'
 import { formatDate } from './date/dateMoment';
-import MyDatePicker from './date/datePicker'
+//import MyDatePicker from './date/datePicker'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        adding: false,
         list: [
             {
                 text: "todo1",
@@ -49,7 +47,6 @@ export default class App extends React.Component {
   handleRemoveListItem (index) {
     let list = this.state.list.slice()
     list.splice(index, 1)
-    this.updateList(list)
   }
 
   handleAddListItem (data) {
@@ -62,6 +59,7 @@ export default class App extends React.Component {
   handleAddListItem (data) {
     let list = this.state.list.slice()
     list.push(data)
+    this.setState({list})
   }
 
   render() {
@@ -73,11 +71,19 @@ export default class App extends React.Component {
             this.state.list
           }
           keyExtractor = {(item, index) => "k" + index}
-          renderItem={({item}) => <Text style={styles.item}>{item.text} {formatDate(item.date)}</Text>}
-          //renderItem={({item}) => <Text style={styles.item}>{item.date.toString()}</Text>}
+          renderItem={({item}) => <View>
+                                    <Text style={styles.item}>
+                                      {item.text} 
+                                      {formatDate(item.date)} 
+                                      {item.done ? "Feito" : "Não Feito"}
+                                    </Text>
+                                    <Button onPress={this.handleRemoveListItem(item.index)} title="delete"/>
+                                    <Button onPress={console.log('edit')} title="edit"/>
+                                  </View>
+                                } 
         />
         </View>
-        <AddForm/>
+        <AddForm onSubmit={this.handleAddListItem}/>
       </View>
     );
   }
