@@ -33,26 +33,13 @@ export default class App extends React.Component {
             }
         ]
     }
-    this.handleUpdateListItem = this.handleUpdateListItem.bind(this)
     this.handleRemoveListItem = this.handleRemoveListItem.bind(this)
     this.handleAddListItem = this.handleAddListItem.bind(this)
-  }
-
-  handleUpdateListItem (index, data) {
-    let list = this.state.list.slice()
-    list[index] = data
-    this.updateList(list)
   }
 
   handleRemoveListItem (index) {
     let list = this.state.list.slice()
     list.splice(index, 1)
-  }
-
-  handleAddListItem (data) {
-    //console.log (data)
-    let list = this.state.list.slice()
-    list.push(data)
     this.updateList(list)
   }
 
@@ -62,23 +49,29 @@ export default class App extends React.Component {
     this.setState({list})
   }
 
+  updateList(list) {
+    this.setState({list})
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={{flex:1}}>
         <FlatList
+
           data={
             this.state.list
           }
+          
           keyExtractor = {(item, index) => "k" + index}
-          renderItem={({item}) => <View>
+          renderItem={({item, index}) => <View>
                                     <Text style={styles.item}>
                                       {item.text} 
                                       {formatDate(item.date)} 
                                       {item.done ? "Feito" : "Não Feito"}
                                     </Text>
-                                    <Button onPress={this.handleRemoveListItem(item.index)} title="delete"/>
-                                    <Button onPress={console.log('edit')} title="edit"/>
+                                    <Button onPress={this.handleRemoveListItem.bind(this, index)} title="delete"/>
+                                    <Button onPress={() => console.log('edit')} title="edit"/>
                                   </View>
                                 } 
         />
