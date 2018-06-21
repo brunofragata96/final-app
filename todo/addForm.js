@@ -15,7 +15,7 @@ class AddForm extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            //adding: false,
+            adding: false,
             //isOpen : false,
             data: {
                 text: "",
@@ -26,6 +26,7 @@ class AddForm extends React.Component{
     this.onControlChange = this.onControlChange.bind(this); 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleStartAdding = this.handleStartAdding.bind(this)
     }
 
     onControlChange(value) { 
@@ -54,7 +55,7 @@ class AddForm extends React.Component{
                 date: "",
                 done: false,
             },
-            //adding: false
+            adding: false
         })
         !this.props.onSubmit || this.props.onSubmit(data)
 
@@ -75,10 +76,15 @@ class AddForm extends React.Component{
 
     }
 
+    handleStartAdding () {
+        this.setState({adding: true})
+    }
+
     render () {
         return <View>
-                
-                <View onSubmit={this.handleSubmit}>
+               {
+                this.state.adding
+                ? <View onSubmit={this.handleSubmit}>
                     <View style={styles.input__container}>
                         <View style={styles.input__wrapper}>
                             <TextInput  
@@ -108,6 +114,8 @@ class AddForm extends React.Component{
                         title="Submit"
                     />
                 </View>
+                 : <Button title="   Add   " onPress={this.handleStartAdding}/>
+                }
         </View>
         }
     }
