@@ -26,7 +26,13 @@ class List extends React.Component {
     handleSomeEditing (index) {
         this.setState({index_editing: index})
     }
-   renderItem (item, index) {
+
+    handleItemSubmit (index, data) {
+        !this.props.onSubmit || this.props.onSubmit(index, data)
+        this.setState(index, data)
+    }
+
+    renderItem (item, index) {
         return <TodoItem key={"item" + index} 
                          data={item}
                          isEditing={index === this.state.index_editing}
@@ -34,7 +40,7 @@ class List extends React.Component {
                          onEditing={this.handleSomeEditing.bind(this, index)}
                          onUpdate={this.handleItemUpdate.bind(this, index)}
                          onRemove={this.handleItemRemove.bind(this, index)}
-                         //adicionar on submit
+                         onSubmit={this.handleItemSubmit.bind(this)}
                />
     }
 

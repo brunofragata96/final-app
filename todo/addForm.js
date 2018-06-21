@@ -78,7 +78,7 @@ class AddForm extends React.Component{
     render () {
         return <View>
                 
-                <View action={"#"} onSubmit={this.handleSubmit}>
+                <View onSubmit={this.handleSubmit}>
                     <View style={styles.input__container}>
                         <View style={styles.input__wrapper}>
                             <TextInput  

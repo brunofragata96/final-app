@@ -51,7 +51,7 @@ class Item extends React.Component {
         // validate data and then send
         let data = Object.assign({}, this.state.data)
         data.date = data.date !== "" ? new Date (data.date) : ""
-        !this.props.onSubmit || this.props.onSubmit(data)
+        !this.props.onUpdate || this.props.onUpdate(data)
     }
 
     handleStateChange () {
@@ -60,7 +60,7 @@ class Item extends React.Component {
         this.setState({
             data
         })
-        !this.props.onUpdate || this.props.onUpdate(data)
+        //!this.props.onUpdate || this.props.onUpdate(data)
     }
 
     render () {
