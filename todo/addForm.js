@@ -5,11 +5,13 @@ import {
     Button,
     Text,
     Switch,
+    StyleSheet,
+    TouchableOpacity,
+    KeyboardAvoidingView,
 } from 'react-native';
 
 import MyDatePicker from '../date/datePicker';
 import { formatDate } from '../date/dateMoment';
-import styles from '../styles/styles';
 
 class AddForm extends React.Component{
     constructor(props) {
@@ -27,6 +29,7 @@ class AddForm extends React.Component{
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleStartAdding = this.handleStartAdding.bind(this)
+    this.cancelAdd = this.cancelAdd.bind(this)
     }
 
     onControlChange(value) { 
@@ -80,29 +83,43 @@ class AddForm extends React.Component{
         this.setState({adding: true})
     }
 
+    cancelAdd () {
+        this.setState({adding: false})
+    }
+
     render () {
-        return <View>
+        return <KeyboardAvoidingView style={styles.formContainer} behavior="padding" enabled>
                {
                 this.state.adding
-                ? <View onSubmit={this.handleSubmit}>
-                    <View style={styles.input__container}>
-                        <View style={styles.input__wrapper}>
-                            <TextInput  
+                ? <View style={styles.formWrapper} onSubmit={this.handleSubmit}>
+                    <View>
+                        <View style={{marginVertical: 10}}>
+                            <Text>1. Qual é a sua tarefa?</Text>
+                        </View>
+                        <View style={{marginVertical: 10, }}>
+                            <TextInput
+                                style={{padding: 5,}}
                                 value={this.state.data.text} 
                                 onChangeText={this.handleInputChange.bind(this,"text")}
                             />
                         </View>
                     </View>
-                    <View style={styles.input__container}>
-                        <View style={styles.input__wrapper}>
+                    <View>
+                        <View style={{marginVertical: 10}}>
+                            <Text>2. Qual é o prazo?</Text>
+                        </View>
+                        <View style={{alignSelf: 'center', marginVertical: 10,}}>
                             <MyDatePicker
                                 value={this.state.data.date}
                                 onChange={this.handleInputChange.bind(this, "date")}
                             />
                         </View>
                     </View>
-                    <View style={styles.input__container}>
-                        <View style={styles.input__wrapper}>
+                    <View >
+                        <View style={{marginVertical: 10}}>
+                            <Text>3. Está feita ou por fazer?</Text>
+                        </View>
+                        <View style={{marginVertical: 10}}>
                             <Switch  
                                 onValueChange={this.onControlChange} 
                                 value={this.state.data.done}            
@@ -113,11 +130,40 @@ class AddForm extends React.Component{
                         onPress={this.handleSubmit}
                         title="Submit"
                     />
-                </View>
-                 : <Button title="   Add   " onPress={this.handleStartAdding}/>
+                    <TouchableOpacity style={styles.cancel} onPress={this.cancelAdd}><Text style={{color: 'red'}}>Cancel</Text></TouchableOpacity>
+                </View >
+                 : <View style={styles.formAdd} ><Button title="   Add   " onPress={this.handleStartAdding}/></View>
                 }
-        </View>
+        </KeyboardAvoidingView>
         }
     }
 
-export default AddForm
+    export default AddForm
+
+    const styles = StyleSheet.create({
+
+        cancel: {
+            position: 'absolute',
+            right: -65,
+            top: 5,
+        },
+
+        formContainer: {
+            backgroundColor: '#f2f2f2',
+            width: 400,
+            alignItems: 'center',
+            
+        },
+        
+        formWrapper: {
+            width: 250,
+            position: 'relative',
+            marginVertical: 10,
+        },
+        
+        formAdd: {
+            width: 400,
+            height: 75,
+        },
+
+    });

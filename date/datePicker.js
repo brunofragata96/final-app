@@ -7,7 +7,7 @@ export default class MyDatePicker extends Component {
   render(){
     return (
       <DatePicker
-        style={{width: 200}}
+        style={{width: 150}}
         date={this.props.value}
         mode="date"
         placeholder="select date"

@@ -65,20 +65,22 @@ class Item extends React.Component {
 
     render () {
         const {text, date} = this.state.data
-        return <ScrollView>
-            <View>{
+        return <View style={!this.props.isEditing ? styles.todoItem : styles.todoItemEdit}>
+            <View style={styles.todoText}>{
                 this.props.isEditing
-                ? <View>
+                ? <View >
                     <TextInput
+                            underlineColorAndroid={'#d6d7da'}
+                            style={styles.todoInput}
                             value={this.state.data.text}
                             onChangeText={this.handleInputChange.bind(this,"text")}
                     />
                 </View>
-                : <Text>{text}</Text>
+                : <Text style={{fontSize: 20}}>{text}</Text>
             }</View>
-            <View>{
+            <View style={styles.todoDate}>{
                 this.props.isEditing
-                ? <View>
+                ? <View style={{marginTop: 30, marginLeft: -5}}>
                     <MyDatePicker
                             value={/* formatDate( */this.state.data.date/*, true ) */}
                             onChange={this.handleInputChange.bind(this, "date")}
@@ -86,10 +88,90 @@ class Item extends React.Component {
                 </View>
                 : <Text>{formatDate(date)}</Text>
             }</View>
-            <View><TouchableOpacity onPress={this.handleStateChange}><Text>Toggle State</Text></TouchableOpacity></View>
-            <View><TouchableOpacity onPress={this.handleEdit}><Text>{this.props.isEditing ? "Save" : "Edit"}</Text></TouchableOpacity></View>
-            <View><TouchableOpacity onPress={this.props.onRemove} /* disabled={this.props.cantRemove ? "disabled" : ""} */><Text>Remove</Text></TouchableOpacity></View>
-        </ScrollView>
+             <View style={styles.todoButtons}>
+                <View style={{padding: 5}}><TouchableOpacity onPress={this.handleEdit}><Text style={{color: '#3333ff'}}>{this.props.isEditing ? "Save" : "Edit"}</Text></TouchableOpacity></View>
+                <View style={{padding: 5}}><TouchableOpacity onPress={this.props.onRemove}><Text style={{color: '#cc0000'}}>Remove</Text></TouchableOpacity></View>
+                <View ><TouchableOpacity style={this.state.data.done ? styles.todoDone : styles.todoTbd} onPress={this.handleStateChange}>
+                <Text style={ {alignItems: 'center', color: 'white'} }>{this.state.data.done ? 'Done!' : 'Not Done'}</Text>
+                </TouchableOpacity></View>
+            </View>
+        </View>
     }
 }
 export default Item;
+
+const styles = StyleSheet.create({
+  
+    todoItemEdit: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'stretch',
+        width: 400,
+        minHeight: 125,
+        backgroundColor: '#FFF',
+        borderWidth: 1,
+        borderColor: '#d6d7da',
+        position: 'relative',
+        marginVertical: 10,
+    },
+
+    todoItem: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'stretch',
+        width: 400,
+        minHeight: 75,
+        backgroundColor: '#FFF',
+        borderWidth: 1,
+        borderColor: '#d6d7da',
+        position: 'relative',
+        marginVertical: 10,
+    },
+
+    todoText:{
+        position: 'absolute',
+        left: 20,
+        top: 15,
+        
+    },
+
+    todoDate: {
+        position: 'absolute',
+        left: 20,
+        top: 40,
+    },
+
+    todoButtons: {
+        position: 'absolute',
+        height: 75,
+        right: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+
+    todoDone: {
+        backgroundColor: 'green',
+        width: 80, 
+        padding: 5, 
+        alignItems: 'center'
+    },
+
+    todoTbd: {
+        backgroundColor: 'red',
+        width: 80, 
+        padding: 5, 
+        alignItems: 'center'
+    },
+
+    todoInput: {
+        width: 150,
+        fontSize: 20, 
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderWidth: 2,
+        borderColor: '#d6d7da',
+    },
+
+  });
+  

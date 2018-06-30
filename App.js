@@ -5,6 +5,7 @@ import {
   View, 
   FlatList,
   Button,
+  ScrollView,
 } from 'react-native';
 
 import AddForm from './todo/AddForm'
@@ -31,7 +32,53 @@ export default class App extends React.Component {
                 text: "todo3",
                 date: new Date(2018, 7, 1),
                 done: false,
-            }
+            },
+            {
+              text: "todo1",
+              date: new Date(2017, 7, 1),
+              done: false,
+          },
+          {
+              text: "todo2",
+              date: new Date(2017, 10, 1),
+              done: false,
+          },
+          {
+              text: "todo3",
+              date: new Date(2018, 7, 1),
+              done: false,
+          },
+          {
+            text: "todo1",
+            date: new Date(2017, 7, 1),
+            done: false,
+        },
+        {
+            text: "todo2",
+            date: new Date(2017, 10, 1),
+            done: false,
+        },
+        {
+            text: "todo3",
+            date: new Date(2018, 7, 1),
+            done: false,
+        },
+        {
+          text: "todo1",
+          date: new Date(2017, 7, 1),
+          done: false,
+      },
+      {
+          text: "todo2",
+          date: new Date(2017, 10, 1),
+          done: false,
+      },
+      {
+          text: "todo3",
+          date: new Date(2018, 7, 1),
+          done: false,
+      },
+      
         ]
     }
     this.handleUpdateListItem = this.handleUpdateListItem.bind(this)
@@ -64,11 +111,14 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flex:1}}> 
-        <TodoList data={this.state.list}
-                  onUpdate={this.handleUpdateListItem}
-                  onRemove={this.handleRemoveListItem}
-        />
+        <View style={{flex:1}}>
+        <ScrollView> 
+          <TodoList  
+                    data={this.state.list}
+                    onUpdate={this.handleUpdateListItem}
+                    onRemove={this.handleRemoveListItem}
+          />
+        </ScrollView>
         </View>
         <AddForm onSubmit={this.handleAddListItem}/> 
       </View>
@@ -79,8 +129,14 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f2f2f2',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 30,
   },
+
+  todoList: {
+    flex: 1,
+    alignItems: 'stretch',
+  }
 });
